@@ -88,7 +88,7 @@ export const InputFormPassword: React.FC<InputFormPasswordProps> = ({
   const labelStyle = {
     top: labelPosition.interpolate({
       inputRange: [0, 1],
-      outputRange: [18, -10],
+      outputRange: [10, -10],
     }),
     fontSize: labelPosition.interpolate({
       inputRange: [0, 1],
