@@ -1,0 +1,50 @@
+name: Deploy and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para comparar versiones entre commits
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build library
+        run: npm run build
+
+      - name: Check if version changed
+        id: version-check
+        run: |
+          PREV_VERSION=$(git show HEAD^:package.json | jq -r .version)
+          CURR_VERSION=$(jq -r .version package.json)
+          echo "Previous version: $PREV_VERSION"
+          echo "Current version: $CURR_VERSION"
+
+          if [ "$PREV_VERSION" != "$CURR_VERSION" ]; then
+            echo "Version changed: yes"
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Version changed: no"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to npm
+        if: steps.version-check.outputs.publish == 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
