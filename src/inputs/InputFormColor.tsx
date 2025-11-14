@@ -94,7 +94,7 @@ export const InputFormColor: React.FC<InputFormColorProps> = ({
             <View style={styles.pickerContainer}>
               <ColorPicker
                 value={tempColor}
-                onComplete={(color) => setTempColor(color.hex)}
+                onComplete={(color: { hex: string }) => setTempColor(color.hex)}
                 style={styles.colorPicker}
               >
                 <Preview />

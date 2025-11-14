@@ -1,85 +1,54 @@
-# OSX
-#
+# Compiled output
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+*.log
+
+# OS
 .DS_Store
 .AppleDouble
 .LSOverride
 ._*
+Thumbs.db
 
-# Node
-#
-node_modules/
-npm-debug.log
-yarn-error.log
-yarn-debug.log
-
-# React Native
-#
-.expo/
-.expo-shared/
-metro-cache/
-
-# Android
-#
-android/app/build/
-android/build/
-android/.gradle/
-android/.idea/
-android/local.properties
-*.iml
-*.hprof
-.cxx/
-.gradle/
-
-# iOS
-#
-ios/build/
-ios/Pods/
-ios/*.xcworkspace
-ios/*.xcuserdata
-ios/*.xcuserdatad
-ios/Podfile.lock
-ios/.xcodebuild.lst
-
-# Fastlane
-#
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
-*/fastlane/test_output
-
-# Bundle artifacts
-*.jsbundle
-
-# CocoaPods
-/ios/Pods/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # Environment variables
 .env
 .env.local
 .env.production
 .env.development
-
-# Debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# Misc
-.vscode/
-.idea/
-*.log
-*.swp
-*.swo
-*~
+.env.test
 
 # Testing
 coverage/
-
-# Signing
-*.keystore
-*.jks
-!debug.keystore
+.nyc_output
 
 # Temporary files
 tmp/
 temp/
+*.tmp
+
+# Package manager locks (opcional - algunos proyectos los commitean)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
