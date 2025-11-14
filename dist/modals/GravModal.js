@@ -36,6 +36,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GravModal = void 0;
 const react_1 = __importStar(require("react"));
 const react_native_1 = require("react-native");
+const react_native_safe_area_context_1 = require("react-native-safe-area-context");
+const typography_1 = require("../theme/typography");
 const GravModal = ({ visible, title = 'Modal Title', onClose = () => { }, onSave = () => { }, saveButtonText = 'Guardar', cancelButtonText = 'Cancelar', saveButtonDisabled = false, loading = false, isVista = false, children, }) => {
     // Handle Android back button
     (0, react_1.useEffect)(() => {
@@ -50,7 +52,7 @@ const GravModal = ({ visible, title = 'Modal Title', onClose = () => { }, onSave
     }, [visible, onClose]);
     return (react_1.default.createElement(react_native_1.Modal, { visible: visible, transparent: true, animationType: "fade", onRequestClose: onClose },
         react_1.default.createElement(react_native_1.View, { style: styles.backdrop }),
-        react_1.default.createElement(react_native_1.SafeAreaView, { style: styles.container },
+        react_1.default.createElement(react_native_safe_area_context_1.SafeAreaView, { style: styles.container },
             react_1.default.createElement(react_native_1.View, { style: styles.modalContent },
                 react_1.default.createElement(react_native_1.View, { style: styles.header },
                     react_1.default.createElement(react_native_1.Text, { style: styles.title }, title),
@@ -59,7 +61,7 @@ const GravModal = ({ visible, title = 'Modal Title', onClose = () => { }, onSave
                 loading ? (
                 /* Loading State */
                 react_1.default.createElement(react_native_1.View, { style: styles.loadingContainer },
-                    react_1.default.createElement(react_native_1.ActivityIndicator, { size: "large", color: "#10b981" }))) : (react_1.default.createElement(react_1.default.Fragment, null,
+                    react_1.default.createElement(react_native_1.ActivityIndicator, { size: "large", color: typography_1.colors.primary }))) : (react_1.default.createElement(react_1.default.Fragment, null,
                     react_1.default.createElement(react_native_1.ScrollView, { style: styles.body, contentContainerStyle: styles.bodyContent }, children),
                     !isVista && (react_1.default.createElement(react_native_1.View, { style: styles.footer },
                         react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: onClose, style: styles.cancelButton },
@@ -78,7 +80,7 @@ const styles = react_native_1.StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: typography_1.colors.backdrop,
     },
     container: {
         flex: 1,
@@ -88,31 +90,31 @@ const styles = react_native_1.StyleSheet.create({
     modalContent: {
         width: '100%',
         height: '100%',
-        backgroundColor: 'white',
+        backgroundColor: typography_1.colors.white,
         flexDirection: 'column',
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: 16,
+        padding: typography_1.spacing.lg,
         borderBottomWidth: 1,
-        borderBottomColor: '#e2e8f0',
+        borderBottomColor: typography_1.colors.border,
     },
     title: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: '#000',
+        fontSize: typography_1.fontSize.xl,
+        fontWeight: typography_1.fontWeight.semibold,
+        color: typography_1.colors.black,
         flex: 1,
     },
     closeButton: {
-        padding: 4,
+        padding: typography_1.spacing.xs,
         marginLeft: 'auto',
     },
     closeIcon: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: '#000',
+        fontSize: typography_1.fontSize['2xl'],
+        fontWeight: typography_1.fontWeight.semibold,
+        color: typography_1.colors.black,
     },
     loadingContainer: {
         flex: 1,
@@ -123,43 +125,43 @@ const styles = react_native_1.StyleSheet.create({
         flex: 1,
     },
     bodyContent: {
-        padding: 16,
+        padding: typography_1.spacing.lg,
     },
     footer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: 12,
-        gap: 12,
+        padding: typography_1.spacing.md,
+        gap: typography_1.spacing.md,
         borderTopWidth: 1,
-        borderTopColor: '#e2e8f0',
+        borderTopColor: typography_1.colors.border,
     },
     cancelButton: {
-        paddingVertical: 12,
-        paddingHorizontal: 24,
+        paddingVertical: typography_1.spacing.md,
+        paddingHorizontal: typography_1.spacing.xl,
         borderWidth: 1,
-        borderColor: '#ef4444',
-        borderRadius: 8,
+        borderColor: typography_1.colors.danger,
+        borderRadius: typography_1.borderRadius.md,
     },
     cancelButtonText: {
-        color: '#ef4444',
-        fontWeight: '700',
-        fontSize: 14,
+        color: typography_1.colors.danger,
+        fontWeight: typography_1.fontWeight.bold,
+        fontSize: typography_1.fontSize.sm,
         textTransform: 'uppercase',
     },
     saveButton: {
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        backgroundColor: '#10b981',
-        borderRadius: 8,
+        paddingVertical: typography_1.spacing.md,
+        paddingHorizontal: typography_1.spacing.xl,
+        backgroundColor: typography_1.colors.primary,
+        borderRadius: typography_1.borderRadius.md,
     },
     saveButtonDisabled: {
-        backgroundColor: '#6ee7b7',
+        backgroundColor: typography_1.colors.primaryLight,
     },
     saveButtonText: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 14,
+        color: typography_1.colors.white,
+        fontWeight: typography_1.fontWeight.bold,
+        fontSize: typography_1.fontSize.sm,
         textTransform: 'uppercase',
     },
 });
