@@ -1,16 +1,21 @@
 {
   "name": "grav-reactnative",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Mi librería de componentes React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["react-native", "components"],
+  "keywords": [
+    "react-native",
+    "components"
+  ],
   "author": "",
   "license": "MIT",
   "peerDependencies": {
@@ -21,5 +26,8 @@
     "@types/react": "^19.2.4",
     "@types/react-native": "^0.72.8",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "zustand": "^5.0.8"
   }
 }
