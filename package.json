@@ -1,11 +1,12 @@
 {
   "name": "grav-reactnative",
-  "version": "0.0.9",
-  "description": "Mi librería de componentes React Native",
+  "version": "0.1.0",
+  "description": "Librería completa de componentes UI para React Native - Modals e Inputs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc",
@@ -20,7 +21,21 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-native": ">=0.70.0"
+    "react-native": ">=0.70.0",
+    "@react-native-community/datetimepicker": "^8.0.0",
+    "expo-image-picker": "^15.0.0",
+    "reanimated-color-picker": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-community/datetimepicker": {
+      "optional": true
+    },
+    "expo-image-picker": {
+      "optional": true
+    },
+    "reanimated-color-picker": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/react": "^19.2.4",
