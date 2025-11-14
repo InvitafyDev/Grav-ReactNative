@@ -15,14 +15,30 @@ export {
 
 // Inputs
 export {
+  // Basic Inputs
   InputFormText,
   InputFormPassword,
   InputFormNumber,
   InputFormTextArea,
   InputFormBool,
+  // Advanced Inputs
+  InputFormSelect,
+  InputFormDate,
+  InputFormDateAndHours,
+  InputFormColor,
+  InputFormColorPicker,
+  InputFormImage,
+  // Types
   type InputFormTextProps,
   type InputFormPasswordProps,
   type InputFormNumberProps,
   type InputFormTextAreaProps,
   type InputFormBoolProps,
+  type InputFormSelectProps,
+  type SelectOption,
+  type InputFormDateProps,
+  type InputFormDateAndHoursProps,
+  type InputFormColorProps,
+  type InputFormColorPickerProps,
+  type InputFormImageProps,
 } from './inputs';

@@ -1,3 +1,4 @@
+// Basic Inputs
 export { InputFormText } from './InputFormText';
 export type { InputFormTextProps } from './InputFormText';
 
@@ -12,3 +13,22 @@ export type { InputFormTextAreaProps } from './InputFormTextArea';
 
 export { InputFormBool } from './InputFormBool';
 export type { InputFormBoolProps } from './InputFormBool';
+
+// Advanced Inputs
+export { InputFormSelect } from './InputFormSelect';
+export type { InputFormSelectProps, SelectOption } from './InputFormSelect';
+
+export { InputFormDate } from './InputFormDate';
+export type { InputFormDateProps } from './InputFormDate';
+
+export { InputFormDateAndHours } from './InputFormDateAndHours';
+export type { InputFormDateAndHoursProps } from './InputFormDateAndHours';
+
+export { InputFormColor } from './InputFormColor';
+export type { InputFormColorProps } from './InputFormColor';
+
+export { InputFormColorPicker } from './InputFormColorPicker';
+export type { InputFormColorPickerProps } from './InputFormColorPicker';
+
+export { InputFormImage } from './InputFormImage';
+export type { InputFormImageProps } from './InputFormImage';
