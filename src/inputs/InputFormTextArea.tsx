@@ -79,7 +79,7 @@ export const InputFormTextArea: React.FC<InputFormTextAreaProps> = ({
           {...rest}
         />
 
-        <Animated.Text style={[styles.label, labelStyle]}>
+        <Animated.Text style={[styles.label, labelStyle]} pointerEvents="none">
           {label}
           {obligatory && <Text style={styles.requiredMark}> *</Text>}
         </Animated.Text>
