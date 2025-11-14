@@ -8,46 +8,57 @@ Una librería completa de componentes UI para React Native, incluyendo modals e 
 npm install grav-reactnative
 ```
 
-### Dependencias Peer
+### Dependencias Requeridas
 
 Esta librería requiere las siguientes dependencias base (obligatorias):
 
 ```bash
-npm install react-native-safe-area-context zustand react-native-svg
+# Para proyectos Expo (recomendado)
+npx expo install react-native-safe-area-context react-native-svg react-native-gesture-handler react-native-reanimated
+
+# Para proyectos React Native CLI
+npm install react-native-safe-area-context react-native-svg react-native-gesture-handler react-native-reanimated
 ```
+
+> **Nota para Expo**: Es muy probable que tu proyecto ya tenga estas dependencias instaladas, ya que son comunes en Expo.
 
 ### Dependencias Opcionales
 
 Dependiendo de los componentes que uses, necesitarás instalar estas dependencias:
 
-#### **Opción 1: Script interactivo (Recomendado)**
+**Para Inputs de Fecha/Hora** (InputFormDate, InputFormDateAndHours):
 ```bash
-bash node_modules/grav-reactnative/install-extras.sh
-```
+# Expo
+npx expo install @react-native-community/datetimepicker
 
-#### **Opción 2: Instalación manual**
-
-Para usar Inputs de Fecha/Hora (InputFormDate, InputFormDateAndHours):
-```bash
+# React Native CLI
 npm install @react-native-community/datetimepicker
 ```
 
-Para usar Inputs de Color (InputFormColor):
+**Para Inputs de Color** (InputFormColor):
 ```bash
 npm install reanimated-color-picker
 ```
 
-Para usar Input de Imagen (InputFormImage):
+**Para Input de Imagen** (InputFormImage):
 ```bash
-npm install expo-image-picker
+# Expo
+npx expo install expo-image-picker
+
+# React Native CLI (no soportado - usa react-native-image-picker)
 ```
 
-Instalación completa (todas las dependencias):
+**Instalación completa** (todas las dependencias opcionales):
 ```bash
-npm install @react-native-community/datetimepicker reanimated-color-picker expo-image-picker
+# Expo
+npx expo install @react-native-community/datetimepicker expo-image-picker
+npm install reanimated-color-picker
+
+# React Native CLI
+npm install @react-native-community/datetimepicker reanimated-color-picker
 ```
 
-> **Nota**: Las dependencias son **opcionales**. Solo instala las que necesites para los componentes que vayas a usar.
+> **Nota**: Las dependencias opcionales solo son necesarias si usas los componentes específicos que las requieren.
 
 ## 🚀 Uso Rápido
 
