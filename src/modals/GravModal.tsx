@@ -10,6 +10,7 @@ import {
   BackHandler,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fontSize, fontWeight, borderRadius, colors, spacing } from '../theme/typography';
 
 export interface GravModalProps {
   visible: boolean;
@@ -73,7 +74,7 @@ export const GravModal: React.FC<GravModalProps> = ({
           {loading ? (
             /* Loading State */
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#10b981" />
+              <ActivityIndicator size="large" color={colors.primary} />
             </View>
           ) : (
             <>
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.backdrop,
   },
   container: {
     flex: 1,
@@ -129,31 +130,31 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     flexDirection: 'column',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: '#e2e8f0',
+    borderBottomColor: colors.border,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: fontSize.xl,
+    fontWeight: fontWeight.semibold,
+    color: colors.black,
     flex: 1,
   },
   closeButton: {
-    padding: 4,
+    padding: spacing.xs,
     marginLeft: 'auto',
   },
   closeIcon: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: fontSize['2xl'],
+    fontWeight: fontWeight.semibold,
+    color: colors.black,
   },
   loadingContainer: {
     flex: 1,
@@ -164,43 +165,43 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bodyContent: {
-    padding: 16,
+    padding: spacing.lg,
   },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: 12,
-    gap: 12,
+    padding: spacing.md,
+    gap: spacing.md,
     borderTopWidth: 1,
-    borderTopColor: '#e2e8f0',
+    borderTopColor: colors.border,
   },
   cancelButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
     borderWidth: 1,
-    borderColor: '#ef4444',
-    borderRadius: 8,
+    borderColor: colors.danger,
+    borderRadius: borderRadius.md,
   },
   cancelButtonText: {
-    color: '#ef4444',
-    fontWeight: '700',
-    fontSize: 14,
+    color: colors.danger,
+    fontWeight: fontWeight.bold,
+    fontSize: fontSize.sm,
     textTransform: 'uppercase',
   },
   saveButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    backgroundColor: '#10b981',
-    borderRadius: 8,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.md,
   },
   saveButtonDisabled: {
-    backgroundColor: '#6ee7b7',
+    backgroundColor: colors.primaryLight,
   },
   saveButtonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 14,
+    color: colors.white,
+    fontWeight: fontWeight.bold,
+    fontSize: fontSize.sm,
     textTransform: 'uppercase',
   },
 });

@@ -12,3 +12,17 @@ export {
   type GravModalProps,
   type ModalConfig
 } from './modals';
+
+// Inputs
+export {
+  InputFormText,
+  InputFormPassword,
+  InputFormNumber,
+  InputFormTextArea,
+  InputFormBool,
+  type InputFormTextProps,
+  type InputFormPasswordProps,
+  type InputFormNumberProps,
+  type InputFormTextAreaProps,
+  type InputFormBoolProps,
+} from './inputs';
