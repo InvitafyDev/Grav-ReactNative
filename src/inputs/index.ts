@@ -18,3 +18,6 @@ export type { InputFormDateProps } from './InputFormDate';
 
 export { InputFormDateAndHours } from './InputFormDateAndHours';
 export type { InputFormDateAndHoursProps } from './InputFormDateAndHours';
+
+export { InputFormColor } from './InputFormColor';
+export type { InputFormColorProps } from './InputFormColor';

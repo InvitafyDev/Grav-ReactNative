@@ -1,6 +1,6 @@
 {
   "name": "grav-reactnative",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Mi librería de componentes React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,10 @@
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">=8.0.0",
     "react": ">=18.0.0",
-    "react-native": ">=0.70.0"
+    "react-native": ">=0.70.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=3.0.0",
+    "reanimated-color-picker": ">=3.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.4",
