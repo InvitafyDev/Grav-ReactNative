@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   presetGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    maxWidth: 140,
+    maxWidth: "100%",
     gap: 8,
   },
   colorSwatch: {

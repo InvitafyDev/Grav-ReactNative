@@ -24,3 +24,6 @@ export type { InputFormColorProps } from './InputFormColor';
 
 export { InputFormColorPicker } from './InputFormColorPicker';
 export type { InputFormColorPickerProps } from './InputFormColorPicker';
+
+export { InputFormSelect } from './InputFormSelect';
+export type { InputFormSelectProps, SelectOption } from './InputFormSelect';
