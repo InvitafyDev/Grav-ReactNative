@@ -21,10 +21,12 @@ export {
   InputFormTextArea,
   InputFormBool,
   InputFormDate,
+  InputFormDateAndHours,
   type InputFormTextProps,
   type InputFormPasswordProps,
   type InputFormNumberProps,
   type InputFormTextAreaProps,
   type InputFormBoolProps,
   type InputFormDateProps,
+  type InputFormDateAndHoursProps,
 } from './inputs';
