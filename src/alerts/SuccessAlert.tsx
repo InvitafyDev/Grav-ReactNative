@@ -14,6 +14,7 @@ interface SuccessAlertProps {
   onClose: () => void;
   zIndex?: number;
   isWrapped?: boolean;
+  isTopModal?: boolean;
 }
 
 export const SuccessAlert: React.FC<SuccessAlertProps> = ({
@@ -21,6 +22,7 @@ export const SuccessAlert: React.FC<SuccessAlertProps> = ({
   onClose,
   zIndex = 1000,
   isWrapped = false,
+  isTopModal = true,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -39,7 +41,7 @@ export const SuccessAlert: React.FC<SuccessAlertProps> = ({
   }, []);
 
   const content = (
-    <View style={[styles.overlay, { zIndex }]}>
+    <View style={[styles.overlay, { zIndex, backgroundColor: isTopModal ? colors.backdrop : 'transparent' }]}>
       <Animated.View
         style={[
           styles.container,

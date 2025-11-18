@@ -25,6 +25,7 @@ export interface GravModalProps {
   children?: React.ReactNode;
   zIndex?: number;
   isWrapped?: boolean;
+  isTopModal?: boolean;
 }
 
 export const GravModal: React.FC<GravModalProps> = ({
@@ -40,6 +41,7 @@ export const GravModal: React.FC<GravModalProps> = ({
   children,
   zIndex = 1000,
   isWrapped = false,
+  isTopModal = true,
 }) => {
   // Handle Android back button
   useEffect(() => {
@@ -56,8 +58,8 @@ export const GravModal: React.FC<GravModalProps> = ({
 
   const content = (
     <>
-      {/* Backdrop */}
-      <View style={[styles.backdrop, { zIndex }]} />
+      {/* Backdrop - solo visible si es el modal superior */}
+      {isTopModal && <View style={[styles.backdrop, { zIndex }]} />}
 
       {/* Modal Content */}
       <SafeAreaView style={[styles.container, { zIndex: zIndex + 1 }]}>

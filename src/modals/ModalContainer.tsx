@@ -13,13 +13,15 @@ export const ModalContainer: React.FC = () => {
         {modals.map((modal, index) => {
           const ModalComponent = modal.component;
           const zIndex = 1000 + index * 10;
+          const isTopModal = index === modals.length - 1;
+
           return (
             <View
               key={`${modal.id}-${index}`}
               style={[styles.modalLayer, { zIndex }]}
-              pointerEvents="box-none"
+              pointerEvents={isTopModal ? 'auto' : 'box-none'}
             >
-              <ModalComponent {...modal.props} zIndex={zIndex} isWrapped />
+              <ModalComponent {...modal.props} zIndex={zIndex} isWrapped isTopModal={isTopModal} />
             </View>
           );
         })}

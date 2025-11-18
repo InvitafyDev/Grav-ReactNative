@@ -17,6 +17,7 @@ interface ConfirmationAlertProps {
   onCancel: () => void;
   zIndex?: number;
   isWrapped?: boolean;
+  isTopModal?: boolean;
 }
 
 export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
@@ -26,6 +27,7 @@ export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
   onCancel,
   zIndex = 1000,
   isWrapped = false,
+  isTopModal = true,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -38,7 +40,7 @@ export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
   }, []);
 
   const content = (
-    <View style={[styles.overlay, { zIndex }]}>
+    <View style={[styles.overlay, { zIndex, backgroundColor: isTopModal ? colors.backdrop : 'transparent' }]}>
       <Animated.View
         style={[
           styles.container,

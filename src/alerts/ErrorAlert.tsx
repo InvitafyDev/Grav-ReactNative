@@ -15,6 +15,7 @@ interface ErrorAlertProps {
   onClose: () => void;
   zIndex?: number;
   isWrapped?: boolean;
+  isTopModal?: boolean;
 }
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({
@@ -22,6 +23,7 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
   onClose,
   zIndex = 1000,
   isWrapped = false,
+  isTopModal = true,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -34,7 +36,7 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
   }, []);
 
   const content = (
-    <View style={[styles.overlay, { zIndex }]}>
+    <View style={[styles.overlay, { zIndex, backgroundColor: isTopModal ? colors.backdrop : 'transparent' }]}>
       <Animated.View
         style={[
           styles.container,
