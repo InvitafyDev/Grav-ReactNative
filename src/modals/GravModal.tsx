@@ -23,8 +23,6 @@ export interface GravModalProps {
   loading?: boolean;
   isVista?: boolean;
   children?: React.ReactNode;
-  zIndex?: number;
-  isWrapped?: boolean;
   isTopModal?: boolean;
 }
 
@@ -39,8 +37,6 @@ export const GravModal: React.FC<GravModalProps> = ({
   loading = false,
   isVista = false,
   children,
-  zIndex = 1000,
-  isWrapped = false,
   isTopModal = true,
 }) => {
   // Handle Android back button
@@ -56,13 +52,18 @@ export const GravModal: React.FC<GravModalProps> = ({
     return () => backHandler.remove();
   }, [visible, onClose, isTopModal]);
 
-  const content = (
-    <>
-      {/* Backdrop - solo visible si es el modal superior */}
-      {isTopModal && <View style={[styles.backdrop, { zIndex }]} />}
+  return (
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      {/* Backdrop */}
+      <View style={styles.backdrop} />
 
-      {/* Modal Content */}
-      <SafeAreaView style={[styles.container, { zIndex: zIndex + 1 }]}>
+      {/* Modal Content Container */}
+      <SafeAreaView style={styles.container}>
         <View style={styles.modalContent}>
           {/* Header */}
           <View style={styles.header}>
@@ -110,38 +111,21 @@ export const GravModal: React.FC<GravModalProps> = ({
           )}
         </View>
       </SafeAreaView>
-    </>
-  );
-
-  if (isWrapped) {
-    return content;
-  }
-
-  return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      {content}
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   backdrop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: colors.backdrop,
+    zIndex: 40,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 50,
   },
   modalContent: {
     width: '100%',
