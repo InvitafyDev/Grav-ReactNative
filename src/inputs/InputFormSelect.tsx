@@ -199,7 +199,7 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginTop: 4,
+    marginTop: 31,
   },
   noMarginTop: {
     marginTop: 0,
@@ -223,9 +223,9 @@ const styles = StyleSheet.create({
     borderColor: crudColors.neutral,
     borderRadius: borderRadius.md,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 12,
     backgroundColor: 'transparent',
-    minHeight: 40,
+    minHeight: 46,
   },
   selectButtonDisabled: {
     opacity: 0.5,
