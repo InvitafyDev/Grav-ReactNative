@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import ColorPicker, { Panel1, HueSlider, OpacitySlider, returnedResults } from 'reanimated-color-picker';
+import ColorPicker, { Panel1, HueSlider, OpacitySlider, type ColorFormatsObject } from 'reanimated-color-picker';
 import {
   crudColors,
   fontSize,
@@ -69,8 +69,8 @@ export const InputFormColor: React.FC<InputFormColorProps> = ({
     setIsFocused(false);
   };
 
-  const onColorSelect = (result: returnedResults) => {
-    setTempColor(result.hex);
+  const onColorSelect = (colors: ColorFormatsObject) => {
+    setTempColor(colors.hex);
   };
 
   const labelStyle = {
