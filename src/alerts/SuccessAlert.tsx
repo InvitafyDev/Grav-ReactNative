@@ -12,11 +12,13 @@ import { colors, fontSize, borderRadius, spacing } from '../theme/typography';
 interface SuccessAlertProps {
   title?: string;
   onClose: () => void;
+  zIndex?: number;
 }
 
 export const SuccessAlert: React.FC<SuccessAlertProps> = ({
   title = 'Se guardó correctamente',
   onClose,
+  zIndex = 1000,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -36,12 +38,13 @@ export const SuccessAlert: React.FC<SuccessAlertProps> = ({
 
   return (
     <Modal transparent visible animationType="fade">
-      <View style={styles.overlay}>
+      <View style={[styles.overlay, { zIndex }]}>
         <Animated.View
           style={[
             styles.container,
             {
               transform: [{ scale: scaleAnim }],
+              zIndex: zIndex + 1,
             },
           ]}
         >

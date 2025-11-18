@@ -15,6 +15,7 @@ interface ConfirmationAlertProps {
   message?: string;
   onConfirm: () => void;
   onCancel: () => void;
+  zIndex?: number;
 }
 
 export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
@@ -22,6 +23,7 @@ export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
   message = '¿Desea guardar los cambios?',
   onConfirm,
   onCancel,
+  zIndex = 1000,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -35,12 +37,13 @@ export const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
 
   return (
     <Modal transparent visible animationType="fade">
-      <View style={styles.overlay}>
+      <View style={[styles.overlay, { zIndex }]}>
         <Animated.View
           style={[
             styles.container,
             {
               transform: [{ scale: scaleAnim }],
+              zIndex: zIndex + 1,
             },
           ]}
         >

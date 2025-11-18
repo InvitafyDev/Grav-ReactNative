@@ -13,11 +13,13 @@ import { colors, fontSize, borderRadius, spacing } from '../theme/typography';
 interface ErrorAlertProps {
   title?: string;
   onClose: () => void;
+  zIndex?: number;
 }
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({
   title = 'Algo salió mal',
   onClose,
+  zIndex = 1000,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -31,12 +33,13 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
 
   return (
     <Modal transparent visible animationType="fade">
-      <View style={styles.overlay}>
+      <View style={[styles.overlay, { zIndex }]}>
         <Animated.View
           style={[
             styles.container,
             {
               transform: [{ scale: scaleAnim }],
+              zIndex: zIndex + 1,
             },
           ]}
         >

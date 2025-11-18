@@ -23,6 +23,7 @@ export interface GravModalProps {
   loading?: boolean;
   isVista?: boolean;
   children?: React.ReactNode;
+  zIndex?: number;
 }
 
 export const GravModal: React.FC<GravModalProps> = ({
@@ -36,6 +37,7 @@ export const GravModal: React.FC<GravModalProps> = ({
   loading = false,
   isVista = false,
   children,
+  zIndex = 1000,
 }) => {
   // Handle Android back button
   useEffect(() => {
@@ -58,10 +60,10 @@ export const GravModal: React.FC<GravModalProps> = ({
       onRequestClose={onClose}
     >
       {/* Backdrop */}
-      <View style={styles.backdrop} />
+      <View style={[styles.backdrop, { zIndex }]} />
 
       {/* Modal Content */}
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { zIndex: zIndex + 1 }]}>
         <View style={styles.modalContent}>
           {/* Header */}
           <View style={styles.header}>

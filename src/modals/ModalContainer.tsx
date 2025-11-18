@@ -8,7 +8,14 @@ export const ModalContainer: React.FC = () => {
     <>
       {modals.map((modal, index) => {
         const ModalComponent = modal.component;
-        return <ModalComponent key={`${modal.id}-${index}`} {...modal.props} />;
+        const zIndex = 1000 + index * 10;
+        return (
+          <ModalComponent
+            key={`${modal.id}-${index}`}
+            {...modal.props}
+            zIndex={zIndex}
+          />
+        );
       })}
     </>
   );
