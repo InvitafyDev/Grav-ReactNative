@@ -24,6 +24,7 @@ export interface GravModalProps {
   isVista?: boolean;
   children?: React.ReactNode;
   zIndex?: number;
+  isWrapped?: boolean;
 }
 
 export const GravModal: React.FC<GravModalProps> = ({
@@ -38,6 +39,7 @@ export const GravModal: React.FC<GravModalProps> = ({
   isVista = false,
   children,
   zIndex = 1000,
+  isWrapped = false,
 }) => {
   // Handle Android back button
   useEffect(() => {
@@ -52,13 +54,8 @@ export const GravModal: React.FC<GravModalProps> = ({
     return () => backHandler.remove();
   }, [visible, onClose]);
 
-  return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
+  const content = (
+    <>
       {/* Backdrop */}
       <View style={[styles.backdrop, { zIndex }]} />
 
@@ -111,6 +108,21 @@ export const GravModal: React.FC<GravModalProps> = ({
           )}
         </View>
       </SafeAreaView>
+    </>
+  );
+
+  if (isWrapped) {
+    return content;
+  }
+
+  return (
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      {content}
     </Modal>
   );
 };

@@ -14,12 +14,14 @@ interface ErrorAlertProps {
   title?: string;
   onClose: () => void;
   zIndex?: number;
+  isWrapped?: boolean;
 }
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({
   title = 'Algo salió mal',
   onClose,
   zIndex = 1000,
+  isWrapped = false,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -31,38 +33,46 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
     }).start();
   }, []);
 
+  const content = (
+    <View style={[styles.overlay, { zIndex }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            transform: [{ scale: scaleAnim }],
+            zIndex: zIndex + 1,
+          },
+        ]}
+      >
+        <View style={styles.iconContainer}>
+          <Svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+            <Circle cx="12" cy="12" r="10" fill={colors.danger} />
+            <Path
+              d="M15 9l-6 6M9 9l6 6"
+              stroke={colors.white}
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
+        </View>
+
+        <Text style={styles.title}>{title}</Text>
+
+        <TouchableOpacity style={styles.button} onPress={onClose}>
+          <Text style={styles.buttonText}>OK</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
+  );
+
+  if (isWrapped) {
+    return content;
+  }
+
   return (
     <Modal transparent visible animationType="fade">
-      <View style={[styles.overlay, { zIndex }]}>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              transform: [{ scale: scaleAnim }],
-              zIndex: zIndex + 1,
-            },
-          ]}
-        >
-          <View style={styles.iconContainer}>
-            <Svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-              <Circle cx="12" cy="12" r="10" fill={colors.danger} />
-              <Path
-                d="M15 9l-6 6M9 9l6 6"
-                stroke={colors.white}
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </View>
-
-          <Text style={styles.title}>{title}</Text>
-
-          <TouchableOpacity style={styles.button} onPress={onClose}>
-            <Text style={styles.buttonText}>OK</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      {content}
     </Modal>
   );
 };

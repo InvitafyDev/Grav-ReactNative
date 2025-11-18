@@ -13,12 +13,14 @@ interface SuccessAlertProps {
   title?: string;
   onClose: () => void;
   zIndex?: number;
+  isWrapped?: boolean;
 }
 
 export const SuccessAlert: React.FC<SuccessAlertProps> = ({
   title = 'Se guardó correctamente',
   onClose,
   zIndex = 1000,
+  isWrapped = false,
 }) => {
   const scaleAnim = new Animated.Value(0);
 
@@ -36,34 +38,42 @@ export const SuccessAlert: React.FC<SuccessAlertProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
+  const content = (
+    <View style={[styles.overlay, { zIndex }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            transform: [{ scale: scaleAnim }],
+            zIndex: zIndex + 1,
+          },
+        ]}
+      >
+        <View style={styles.iconContainer}>
+          <Svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+            <Circle cx="12" cy="12" r="10" fill={colors.primary} />
+            <Path
+              d="M9 12l2 2 4-4"
+              stroke={colors.white}
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
+        </View>
+
+        <Text style={styles.title}>{title}</Text>
+      </Animated.View>
+    </View>
+  );
+
+  if (isWrapped) {
+    return content;
+  }
+
   return (
     <Modal transparent visible animationType="fade">
-      <View style={[styles.overlay, { zIndex }]}>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              transform: [{ scale: scaleAnim }],
-              zIndex: zIndex + 1,
-            },
-          ]}
-        >
-          <View style={styles.iconContainer}>
-            <Svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-              <Circle cx="12" cy="12" r="10" fill={colors.primary} />
-              <Path
-                d="M9 12l2 2 4-4"
-                stroke={colors.white}
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </View>
-
-          <Text style={styles.title}>{title}</Text>
-        </Animated.View>
-      </View>
+      {content}
     </Modal>
   );
 };
