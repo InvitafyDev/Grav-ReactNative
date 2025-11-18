@@ -25,6 +25,7 @@ export {
   InputFormColor,
   InputFormColorPicker,
   InputFormSelect,
+  InputFormImage,
   type InputFormTextProps,
   type InputFormPasswordProps,
   type InputFormNumberProps,
@@ -36,4 +37,5 @@ export {
   type InputFormColorPickerProps,
   type InputFormSelectProps,
   type SelectOption,
+  type InputFormImageProps,
 } from './inputs';

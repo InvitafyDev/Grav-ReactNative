@@ -32,12 +32,20 @@ Para los componentes de selección de color necesitas instalar:
 npm install react-native-reanimated react-native-gesture-handler reanimated-color-picker react-native-worklets@0.5.1
 ```
 
+#### InputFormImage
+
+Para el componente de carga de imágenes necesitas instalar:
+
+```bash
+npm install expo-image-picker
+```
+
 ### Instalación completa (todos los inputs especiales)
 
 Si planeas usar todos los inputs especiales, instala todas las dependencias de una vez:
 
 ```bash
-npm install @react-native-community/datetimepicker react-native-reanimated react-native-gesture-handler reanimated-color-picker
+npm install @react-native-community/datetimepicker react-native-reanimated react-native-gesture-handler reanimated-color-picker expo-image-picker
 ```
 
 ## Componentes disponibles
@@ -128,6 +136,25 @@ import { InputFormColorPicker } from 'grav-reactnative';
 />
 ```
 
+#### InputFormImage
+
+Componente para cargar y previsualizar imágenes desde la galería del dispositivo.
+
+**Dependencia requerida:** `expo-image-picker`
+
+```typescript
+import { InputFormImage } from 'grav-reactnative';
+
+<InputFormImage
+  value={imageBase64}
+  onChange={(base64) => setImageBase64(base64)}
+  label="Foto de perfil"
+  obligatory
+/>
+```
+
+**Nota:** El componente devuelve la imagen en formato base64 con el prefijo `data:image/jpeg;base64,`.
+
 ### Otros componentes
 
 - `Button` - Botón personalizable
@@ -204,6 +231,7 @@ function MyForm() {
 - react-native-gesture-handler: 2.0.0 o superior
 - react-native-reanimated: 3.0.0 o superior
 - reanimated-color-picker: 3.0.0 o superior
+- expo-image-picker: 15.0.0 o superior
 
 ## Solución de problemas
 
