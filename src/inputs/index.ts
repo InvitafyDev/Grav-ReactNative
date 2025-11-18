@@ -15,3 +15,6 @@ export type { InputFormBoolProps } from './InputFormBool';
 
 export { InputFormDate } from './InputFormDate';
 export type { InputFormDateProps } from './InputFormDate';
+
+export { InputFormDateAndHours } from './InputFormDateAndHours';
+export type { InputFormDateAndHoursProps } from './InputFormDateAndHours';
