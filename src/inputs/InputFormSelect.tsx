@@ -15,6 +15,7 @@ import {
   fontSize,
   borderRadius,
   borderWidth,
+  colors,
 } from '../theme/typography';
 
 export interface SelectOption {
@@ -29,6 +30,7 @@ export interface InputFormSelectProps {
   onClear?: () => void;
   label: string;
   disabled?: boolean;
+  obligatory?: boolean;
   showPlusIcon?: boolean;
   onPlusClick?: () => void;
   placeholder?: string;
@@ -42,6 +44,7 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
   onClear,
   label,
   disabled = false,
+  obligatory = false,
   showPlusIcon = false,
   onPlusClick,
   placeholder = 'Seleccione una opción',
@@ -73,7 +76,10 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
 
   return (
     <View style={[styles.container, noMarginTop && styles.noMarginTop]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>
+        {label}
+        {obligatory && <Text style={styles.requiredMark}> *</Text>}
+      </Text>
 
       <View style={styles.selectWithButton}>
         <TouchableOpacity
@@ -390,5 +396,8 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xs,
     color: crudColors.neutral,
     opacity: 0.6,
+  },
+  requiredMark: {
+    color: colors.danger,
   },
 });
