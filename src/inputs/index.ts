@@ -21,3 +21,6 @@ export type { InputFormDateAndHoursProps } from './InputFormDateAndHours';
 
 export { InputFormColor } from './InputFormColor';
 export type { InputFormColorProps } from './InputFormColor';
+
+export { InputFormColorPicker } from './InputFormColorPicker';
+export type { InputFormColorPickerProps } from './InputFormColorPicker';

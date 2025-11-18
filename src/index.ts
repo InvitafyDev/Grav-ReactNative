@@ -23,6 +23,7 @@ export {
   InputFormDate,
   InputFormDateAndHours,
   InputFormColor,
+  InputFormColorPicker,
   type InputFormTextProps,
   type InputFormPasswordProps,
   type InputFormNumberProps,
@@ -31,4 +32,5 @@ export {
   type InputFormDateProps,
   type InputFormDateAndHoursProps,
   type InputFormColorProps,
+  type InputFormColorPickerProps,
 } from './inputs';
