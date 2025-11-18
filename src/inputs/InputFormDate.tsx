@@ -5,8 +5,10 @@ import {
   Text,
   StyleSheet,
   Animated,
-  TextInputProps,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Svg, { Path, G } from 'react-native-svg';
 import {
   crudColors,
@@ -16,9 +18,9 @@ import {
   colors,
 } from '../theme/typography';
 
-export interface InputFormDateProps extends Omit<TextInputProps, 'value' | 'onChangeText'> {
-  value: string;
-  onChangeText: (text: string) => void;
+export interface InputFormDateProps {
+  value: Date | null;
+  onChange: (date: Date | null) => void;
   label: string;
   disabled?: boolean;
   obligatory?: boolean;
@@ -28,15 +30,16 @@ export interface InputFormDateProps extends Omit<TextInputProps, 'value' | 'onCh
 
 export const InputFormDate: React.FC<InputFormDateProps> = ({
   value,
-  onChangeText,
+  onChange,
   label,
   disabled = false,
   obligatory = false,
   icon = null,
   noMarginTop = false,
-  ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+  const [tempDate, setTempDate] = useState<Date | null>(null);
   const labelPosition = useRef(new Animated.Value(value ? 1 : 0)).current;
 
   useEffect(() => {
@@ -47,29 +50,48 @@ export const InputFormDate: React.FC<InputFormDateProps> = ({
     }).start();
   }, [isFocused, value, labelPosition]);
 
-  const formatDate = (text: string): string => {
-    // Remove all non-numeric characters
-    const cleaned = text.replace(/\D/g, '');
+  const formatDate = (date: Date | null): string => {
+    if (!date) return '';
 
-    // Apply formatting as user types
-    let formatted = cleaned;
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
 
-    if (cleaned.length >= 2) {
-      formatted = cleaned.slice(0, 2) + '/' + cleaned.slice(2);
-    }
-
-    if (cleaned.length >= 4) {
-      formatted = cleaned.slice(0, 2) + '/' + cleaned.slice(2, 4) + '/' + cleaned.slice(4, 8);
-    }
-
-    return formatted;
+    return `${day}/${month}/${year}`;
   };
 
-  const handleChangeText = (text: string) => {
-    const formatted = formatDate(text);
-    if (formatted.length <= 10) {
-      onChangeText(formatted);
+  const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (Platform.OS === 'android') {
+      setShowPicker(false);
+      if (event.type === 'set' && selectedDate) {
+        onChange(selectedDate);
+      }
+    } else {
+      // iOS
+      if (event.type === 'set' && selectedDate) {
+        setTempDate(selectedDate);
+      }
     }
+  };
+
+  const handleIOSConfirm = () => {
+    if (tempDate) {
+      onChange(tempDate);
+    }
+    setShowPicker(false);
+    setTempDate(null);
+  };
+
+  const handleIOSCancel = () => {
+    setShowPicker(false);
+    setTempDate(null);
+  };
+
+  const handlePress = () => {
+    if (disabled) return;
+    setIsFocused(true);
+    setTempDate(value || new Date());
+    setShowPicker(true);
   };
 
   const CalendarIcon = () => (
@@ -99,33 +121,64 @@ export const InputFormDate: React.FC<InputFormDateProps> = ({
   };
 
   return (
-    <View style={[styles.container, noMarginTop && styles.noMarginTop]}>
-      {icon && <View style={styles.iconWrapper}>{icon}</View>}
+    <>
+      <TouchableOpacity
+        onPress={handlePress}
+        activeOpacity={0.7}
+        disabled={disabled}
+        style={[styles.container, noMarginTop && styles.noMarginTop]}
+      >
+        {icon && <View style={styles.iconWrapper}>{icon}</View>}
 
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={[styles.input, disabled && styles.inputDisabled]}
-          value={value}
-          onChangeText={handleChangeText}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          editable={!disabled}
-          keyboardType="numeric"
-          placeholder=""
-          maxLength={10}
-          {...rest}
-        />
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={[styles.input, disabled && styles.inputDisabled]}
+            value={formatDate(value)}
+            editable={false}
+            pointerEvents="none"
+          />
 
-        <Animated.Text style={[styles.label, labelStyle]} pointerEvents="none">
-          {label}
-          {obligatory && <Text style={styles.requiredMark}> *</Text>}
-        </Animated.Text>
+          <Animated.Text style={[styles.label, labelStyle]} pointerEvents="none">
+            {label}
+            {obligatory && <Text style={styles.requiredMark}> *</Text>}
+          </Animated.Text>
 
-        <View style={styles.calendarIconWrapper}>
-          <CalendarIcon />
+          <View style={styles.calendarIconWrapper}>
+            <CalendarIcon />
+          </View>
         </View>
-      </View>
-    </View>
+      </TouchableOpacity>
+
+      {Platform.OS === 'ios' && showPicker && (
+        <View style={styles.iosPickerContainer}>
+          <View style={styles.iosPickerHeader}>
+            <TouchableOpacity onPress={handleIOSCancel}>
+              <Text style={styles.iosPickerButton}>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleIOSConfirm}>
+              <Text style={[styles.iosPickerButton, styles.iosPickerConfirm]}>Confirmar</Text>
+            </TouchableOpacity>
+          </View>
+          <DateTimePicker
+            value={tempDate || new Date()}
+            mode="date"
+            display="spinner"
+            onChange={handleDateChange}
+            locale="es-ES"
+          />
+        </View>
+      )}
+
+      {Platform.OS === 'android' && showPicker && (
+        <DateTimePicker
+          value={tempDate || new Date()}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+          locale="es-ES"
+        />
+      )}
+    </>
   );
 };
 
@@ -179,5 +232,26 @@ const styles = StyleSheet.create({
     padding: 4,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iosPickerContainer: {
+    backgroundColor: crudColors.bg,
+    borderTopWidth: 1,
+    borderTopColor: crudColors.neutral,
+    marginTop: 10,
+  },
+  iosPickerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: crudColors.neutral,
+  },
+  iosPickerButton: {
+    fontSize: fontSize.base,
+    color: colors.primary,
+  },
+  iosPickerConfirm: {
+    fontWeight: '600',
   },
 });
