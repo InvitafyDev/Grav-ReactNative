@@ -7,6 +7,7 @@ export {
   useModalStore,
   openModal,
   closeModal,
+  closeTopModal,
   closeAllModals,
   type ModalConfig
 } from './modalStore';

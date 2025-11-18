@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
-  Modal,
   View,
   Text,
   TouchableOpacity,
@@ -8,6 +7,8 @@ import {
   ActivityIndicator,
   StyleSheet,
   BackHandler,
+  Animated,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fontSize, fontWeight, borderRadius, colors, spacing } from '../theme/typography';
@@ -24,6 +25,7 @@ export interface GravModalProps {
   isVista?: boolean;
   children?: React.ReactNode;
   isTopModal?: boolean;
+  zIndex?: number;
 }
 
 export const GravModal: React.FC<GravModalProps> = ({
@@ -38,7 +40,10 @@ export const GravModal: React.FC<GravModalProps> = ({
   isVista = false,
   children,
   isTopModal = true,
+  zIndex = 1000,
 }) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
   // Handle Android back button
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -52,84 +57,116 @@ export const GravModal: React.FC<GravModalProps> = ({
     return () => backHandler.remove();
   }, [visible, onClose, isTopModal]);
 
+  // Handle fade animation
+  useEffect(() => {
+    if (visible) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible, fadeAnim]);
+
+  if (!visible) return null;
+
   return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
+    <Animated.View
+      style={[
+        styles.overlay,
+        {
+          zIndex,
+          opacity: fadeAnim,
+        },
+      ]}
     >
       {/* Backdrop */}
-      <View style={styles.backdrop} />
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={[styles.backdrop, { zIndex }]} />
+      </TouchableWithoutFeedback>
 
       {/* Modal Content Container */}
-      <SafeAreaView style={styles.container}>
-        <View style={styles.modalContent}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Text style={styles.closeIcon}>✕</Text>
-            </TouchableOpacity>
-          </View>
-
-          {loading ? (
-            /* Loading State */
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={colors.primary} />
+      <View style={[styles.container, { zIndex: zIndex + 1 }]}>
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.modalContent}>
+            {/* Header */}
+            <View style={styles.header}>
+              <Text style={styles.title}>{title}</Text>
+              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                <Text style={styles.closeIcon}>✕</Text>
+              </TouchableOpacity>
             </View>
-          ) : (
-            <>
-              {/* Body */}
-              <ScrollView
-                style={styles.body}
-                contentContainerStyle={styles.bodyContent}
-              >
-                {children}
-              </ScrollView>
 
-              {/* Footer */}
-              {!isVista && (
-                <View style={styles.footer}>
-                  <TouchableOpacity onPress={onClose} style={styles.cancelButton}>
-                    <Text style={styles.cancelButtonText}>{cancelButtonText}</Text>
-                  </TouchableOpacity>
+            {loading ? (
+              /* Loading State */
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={colors.primary} />
+              </View>
+            ) : (
+              <>
+                {/* Body */}
+                <ScrollView
+                  style={styles.body}
+                  contentContainerStyle={styles.bodyContent}
+                >
+                  {children}
+                </ScrollView>
 
-                  <TouchableOpacity
-                    onPress={onSave}
-                    style={[
-                      styles.saveButton,
-                      saveButtonDisabled && styles.saveButtonDisabled,
-                    ]}
-                    disabled={saveButtonDisabled}
-                  >
-                    <Text style={styles.saveButtonText}>{saveButtonText}</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </>
-          )}
-        </View>
-      </SafeAreaView>
-    </Modal>
+                {/* Footer */}
+                {!isVista && (
+                  <View style={styles.footer}>
+                    <TouchableOpacity onPress={onClose} style={styles.cancelButton}>
+                      <Text style={styles.cancelButtonText}>{cancelButtonText}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={onSave}
+                      style={[
+                        styles.saveButton,
+                        saveButtonDisabled && styles.saveButtonDisabled,
+                      ]}
+                      disabled={saveButtonDisabled}
+                    >
+                      <Text style={styles.saveButtonText}>{saveButtonText}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
+            )}
+          </View>
+        </SafeAreaView>
+      </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+  },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: colors.backdrop,
-    zIndex: 40,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 50,
+  },
+  safeArea: {
+    flex: 1,
+    width: '100%',
   },
   modalContent: {
+    flex: 1,
     width: '100%',
-    height: '100%',
     backgroundColor: colors.white,
     flexDirection: 'column',
   },
