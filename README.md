@@ -29,7 +29,14 @@ npm install @react-native-community/datetimepicker
 Para los componentes de selección de color necesitas instalar:
 
 ```bash
-npm install react-native-reanimated react-native-gesture-handler reanimated-color-picker react-native-worklets@0.5.1
+npm install react-native-reanimated reanimated-color-picker
+```
+
+```bash
+npx expo install react-native-gesture-handler```
+
+```bash
+npx expo install react-native-worklets@0.5.1
 ```
 
 #### InputFormImage
@@ -37,7 +44,7 @@ npm install react-native-reanimated react-native-gesture-handler reanimated-colo
 Para el componente de carga de imágenes necesitas instalar:
 
 ```bash
-npm install expo-image-picker
+npx expo install expo-image-picker
 ```
 
 ### Instalación completa (todos los inputs especiales)
@@ -154,6 +161,58 @@ import { InputFormImage } from 'grav-reactnative';
 ```
 
 **Nota:** El componente devuelve la imagen en formato base64 con el prefijo `data:image/jpeg;base64,`.
+
+### Alertas
+
+Sistema de alertas reutilizables sin dependencias externas.
+
+#### showSuccessAlert
+
+Alerta de éxito que se cierra automáticamente después de 1.5 segundos.
+
+```typescript
+import { showSuccessAlert } from 'grav-reactnative';
+
+showSuccessAlert('Datos guardados correctamente');
+```
+
+#### showErrorAlert
+
+Alerta de error con botón OK para cerrar.
+
+```typescript
+import { showErrorAlert } from 'grav-reactnative';
+
+showErrorAlert('No se pudo guardar la información');
+```
+
+#### showConfirmationAlert
+
+Alerta de confirmación con botones Sí/No. Retorna una Promise.
+
+```typescript
+import { showConfirmationAlert } from 'grav-reactnative';
+
+// Con callback
+showConfirmationAlert(
+  'Confirmación',
+  '¿Desea eliminar este elemento?',
+  () => {
+    console.log('Usuario confirmó');
+  }
+);
+
+// Con async/await
+const confirmed = await showConfirmationAlert(
+  'Guardar cambios',
+  '¿Desea guardar los cambios realizados?'
+);
+
+if (confirmed) {
+  // Usuario confirmó
+  console.log('Guardando...');
+}
+```
 
 ### Otros componentes
 
