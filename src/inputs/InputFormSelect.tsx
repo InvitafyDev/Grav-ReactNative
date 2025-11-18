@@ -7,6 +7,7 @@ import {
   Modal,
   FlatList,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import {
@@ -47,10 +48,16 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
   noMarginTop = false,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredItems = items.filter((item) =>
+    item.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSelect = (item: SelectOption) => {
     onChange(item);
     setIsModalVisible(false);
+    setSearchQuery('');
   };
 
   const handleClear = () => {
@@ -138,18 +145,27 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
         visible={isModalVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setIsModalVisible(false)}
+        onRequestClose={() => {
+          setIsModalVisible(false);
+          setSearchQuery('');
+        }}
       >
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
-          onPress={() => setIsModalVisible(false)}
+          onPress={() => {
+            setIsModalVisible(false);
+            setSearchQuery('');
+          }}
         >
-          <View style={styles.modalContent}>
+          <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{label}</Text>
               <TouchableOpacity
-                onPress={() => setIsModalVisible(false)}
+                onPress={() => {
+                  setIsModalVisible(false);
+                  setSearchQuery('');
+                }}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
                 <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -164,30 +180,73 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
               </TouchableOpacity>
             </View>
 
-            <ScrollView style={styles.scrollView}>
-              <FlatList
-                data={items}
-                keyExtractor={(item, index) => `${item.value}-${index}`}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={[
-                      styles.option,
-                      value?.value === item.value && styles.selectedOption,
-                    ]}
-                    onPress={() => handleSelect(item)}
-                  >
-                    <Text
-                      style={[
-                        styles.optionText,
-                        value?.value === item.value && styles.selectedOptionText,
-                      ]}
-                    >
-                      {item.label}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-                scrollEnabled={false}
+            <View style={styles.searchContainer}>
+              <Svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={styles.searchIcon}>
+                <Path
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  stroke={crudColors.neutral}
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Buscar..."
+                placeholderTextColor={crudColors.neutral + '80'}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                autoCapitalize="none"
+                autoCorrect={false}
               />
+              {searchQuery.length > 0 && (
+                <TouchableOpacity
+                  onPress={() => setSearchQuery('')}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                  <Svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <Path
+                      d="M18 6L6 18M6 6l12 12"
+                      stroke={crudColors.neutral}
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </Svg>
+                </TouchableOpacity>
+              )}
+            </View>
+
+            <ScrollView style={styles.scrollView}>
+              {filteredItems.length > 0 ? (
+                <FlatList
+                  data={filteredItems}
+                  keyExtractor={(item, index) => `${item.value}-${index}`}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.option,
+                        value?.value === item.value && styles.selectedOption,
+                      ]}
+                      onPress={() => handleSelect(item)}
+                    >
+                      <Text
+                        style={[
+                          styles.optionText,
+                          value?.value === item.value && styles.selectedOptionText,
+                        ]}
+                      >
+                        {item.label}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  scrollEnabled={false}
+                />
+              ) : (
+                <View style={styles.noResults}>
+                  <Text style={styles.noResultsText}>No se encontraron resultados</Text>
+                </View>
+              )}
             </ScrollView>
           </View>
         </TouchableOpacity>
@@ -199,7 +258,7 @@ export const InputFormSelect: React.FC<InputFormSelectProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginTop: 31,
+    marginTop: 24,
   },
   noMarginTop: {
     marginTop: 0,
@@ -303,5 +362,33 @@ const styles = StyleSheet.create({
   },
   selectedOptionText: {
     color: '#ffffff',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+    gap: 8,
+  },
+  searchIcon: {
+    marginRight: 4,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: fontSize.xs,
+    color: crudColors.neutral,
+    padding: 0,
+  },
+  noResults: {
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noResultsText: {
+    fontSize: fontSize.xs,
+    color: crudColors.neutral,
+    opacity: 0.6,
   },
 });
