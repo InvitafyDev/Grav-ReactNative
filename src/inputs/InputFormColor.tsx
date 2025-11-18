@@ -69,8 +69,8 @@ export const InputFormColor: React.FC<InputFormColorProps> = ({
     setIsFocused(false);
   };
 
-  const onColorSelect = (colors: ColorFormatsObject) => {
-    setTempColor(colors.hex);
+  const onColorChange = ({ hex }: ColorFormatsObject) => {
+    setTempColor(hex);
   };
 
   const labelStyle = {
@@ -133,7 +133,7 @@ export const InputFormColor: React.FC<InputFormColorProps> = ({
             <View style={styles.pickerContainer}>
               <ColorPicker
                 value={tempColor}
-                onComplete={onColorSelect}
+                onChangeJS={onColorChange}
                 style={styles.colorPicker}
               >
                 <Panel1 style={styles.panel} />
