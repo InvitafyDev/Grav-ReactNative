@@ -12,3 +12,6 @@ export type { InputFormTextAreaProps } from './InputFormTextArea';
 
 export { InputFormBool } from './InputFormBool';
 export type { InputFormBoolProps } from './InputFormBool';
+
+export { InputFormDate } from './InputFormDate';
+export type { InputFormDateProps } from './InputFormDate';
