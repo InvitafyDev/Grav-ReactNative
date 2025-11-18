@@ -23,5 +23,3 @@ export const ModalContainer: React.FC = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});
