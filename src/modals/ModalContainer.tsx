@@ -19,7 +19,7 @@ export const ModalContainer: React.FC = () => {
             <View
               key={`${modal.id}-${index}`}
               style={[styles.modalLayer, { zIndex }]}
-              pointerEvents={isTopModal ? 'auto' : 'box-none'}
+              pointerEvents={isTopModal ? 'auto' : 'none'}
             >
               <ModalComponent {...modal.props} zIndex={zIndex} isWrapped isTopModal={isTopModal} />
             </View>

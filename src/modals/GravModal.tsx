@@ -46,7 +46,7 @@ export const GravModal: React.FC<GravModalProps> = ({
   // Handle Android back button
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (visible) {
+      if (visible && isTopModal) {
         onClose();
         return true;
       }
@@ -54,7 +54,7 @@ export const GravModal: React.FC<GravModalProps> = ({
     });
 
     return () => backHandler.remove();
-  }, [visible, onClose]);
+  }, [visible, onClose, isTopModal]);
 
   const content = (
     <>
