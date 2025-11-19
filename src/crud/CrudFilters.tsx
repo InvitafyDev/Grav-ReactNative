@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import Svg, { Path, Line } from 'react-native-svg';
 import type { FiltrosI } from './interfaces';
 import { InputFormText } from '../inputs/InputFormText';
@@ -276,25 +276,33 @@ export const CrudFilters: React.FC<CrudFiltersProps> = ({
 
       {showFilters && (
         <View style={styles.filtersContainer}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.filtersGrid}>
-              {filters.map((filter, index) => (
-                <View key={index} style={styles.filterItem}>
-                  {renderFilter(filter, index)}
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={[...filters, { tipo: 'pageSize' as const }]}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => {
+              if ('tipo' in item && item.tipo === 'pageSize') {
+                return (
+                  <View style={styles.filterItem}>
+                    <InputFormText
+                      label="Mostrando:"
+                      value={pageSize}
+                      onChangeText={setPageSize}
+                      keyboardType="numeric"
+                      noMarginTop
+                    />
+                  </View>
+                );
+              }
+              return (
+                <View style={styles.filterItem}>
+                  {renderFilter(item as FiltrosI, index)}
                 </View>
-              ))}
-
-              <View style={styles.filterItem}>
-                <InputFormText
-                  label="Mostrando:"
-                  value={pageSize}
-                  onChangeText={setPageSize}
-                  keyboardType="numeric"
-                  noMarginTop
-                />
-              </View>
-            </View>
-          </ScrollView>
+              );
+            }}
+            contentContainerStyle={styles.filtersGrid}
+          />
 
           <View style={styles.filterActions}>
             <TouchableOpacity
@@ -358,7 +366,6 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   filtersGrid: {
-    flexDirection: 'row',
     paddingHorizontal: spacing.md,
     gap: spacing.md,
   },
