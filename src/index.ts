@@ -46,3 +46,31 @@ export {
   showErrorAlert,
   showConfirmationAlert,
 } from './alerts';
+
+// CRUD
+export {
+  CrudWrapper,
+  CrudTable,
+  CrudFilters,
+  Pagination,
+  TextCell,
+  BoolCell,
+  DateCell,
+  ImageCell,
+  EditableTextCell,
+  EditableNumberCell,
+  EditableBoolCell,
+  ButtonsCell,
+  ComponentCell,
+  DynamicButtonCell,
+  DualTextButtonCell,
+  ConditionalCell,
+  MultiTextButtonCell,
+  CellRenderer,
+  TableHeader,
+  TableRow,
+  type ButtonConfig,
+  type TableHeaderType,
+  type FiltrosI,
+  type CrudWrapperProps,
+} from './crud';

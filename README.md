@@ -8,6 +8,35 @@ Librería de componentes React Native con inputs especializados, modales y compo
 npm install grav-reactnative
 ```
 
+### Configuración de SafeAreaProvider (Requerido)
+
+**IMPORTANTE:** Para que los modales y componentes respeten correctamente las áreas seguras del dispositivo (notch, status bar, home indicator, etc.), debes envolver tu aplicación con `SafeAreaProvider`.
+
+```bash
+npm install react-native-safe-area-context
+```
+
+En tu archivo principal (generalmente `App.tsx` o `App.js`):
+
+```typescript
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ModalContainer } from 'grav-reactnative';
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      {/* Tu aplicación aquí */}
+      <ModalContainer />
+    </SafeAreaProvider>
+  );
+}
+```
+
+**¿Por qué es necesario?**
+- Sin `SafeAreaProvider`, los modales pueden no respetar las áreas seguras en la primera apertura
+- El provider calcula y provee los insets de las áreas seguras a todos los componentes hijos
+- Esto evita problemas de race condition donde los valores de SafeArea no están disponibles en el primer render
+
 ## Dependencias requeridas
 
 Esta librería requiere las siguientes dependencias peer instaladas en tu proyecto:
@@ -214,6 +243,40 @@ if (confirmed) {
 }
 ```
 
+### CRUD
+
+Sistema completo de tablas CRUD con paginación, filtros, sorting y más.
+
+**Ver [CRUD_README.md](./CRUD_README.md) para documentación detallada.**
+
+```typescript
+import { CrudWrapper } from 'grav-reactnative';
+
+<CrudWrapper
+  Filtros={filtros}
+  todosLosObjetos={data}
+  tableH={tableHeaders}
+  totalRows={data.length}
+  PageSize={10}
+  currentPage={1}
+  selectedAscOrDesc="asc"
+  selectedSort="id"
+  Titulo_Crud="Mis datos"
+  onFilter={handleFilter}
+  onAdd={handleAdd}
+/>
+```
+
+Características:
+- ✅ Tabla con FlatList virtualizada
+- ✅ Paginación completa
+- ✅ Filtros dinámicos
+- ✅ Sorting ascendente/descendente
+- ✅ Celdas editables en tiempo real
+- ✅ Expand/collapse de subrows
+- ✅ Múltiples tipos de celdas
+- ✅ Componentes custom
+
 ### Otros componentes
 
 - `Button` - Botón personalizable
@@ -286,6 +349,7 @@ function MyForm() {
 
 - React: 18.0.0 o superior
 - React Native: 0.70.0 o superior
+- **react-native-safe-area-context: 4.0.0 o superior (REQUERIDO)**
 - @react-native-community/datetimepicker: 8.0.0 o superior
 - react-native-gesture-handler: 2.0.0 o superior
 - react-native-reanimated: 3.0.0 o superior
@@ -293,6 +357,31 @@ function MyForm() {
 - expo-image-picker: 15.0.0 o superior
 
 ## Solución de problemas
+
+### Los modales no respetan las áreas seguras (notch, status bar)
+
+Si los modales aparecen debajo del notch o status bar en la primera apertura:
+
+1. Asegúrate de haber instalado `react-native-safe-area-context`
+2. Envuelve tu aplicación con `<SafeAreaProvider>` en el componente raíz
+3. El `ModalContainer` debe estar dentro del `SafeAreaProvider`
+4. Reinicia la aplicación completamente
+
+**Ejemplo correcto:**
+
+```typescript
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ModalContainer } from 'grav-reactnative';
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <YourApp />
+      <ModalContainer />
+    </SafeAreaProvider>
+  );
+}
+```
 
 ### Error con react-native-reanimated
 
