@@ -56,7 +56,6 @@ export const DateCell: React.FC<DateCellProps> = ({ item, header, isDatetime = f
 const styles = StyleSheet.create({
   text: {
     ...crudTypography.cell,
-    paddingHorizontal: 4,
     paddingVertical: 2,
   },
   bold: {

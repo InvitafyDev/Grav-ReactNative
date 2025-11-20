@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import type { CrudWrapperProps, TableHeader } from './interfaces';
 import { CrudFilters } from './CrudFilters';
 import { CrudTable } from './CrudTable';
@@ -37,6 +37,8 @@ export const CrudWrapper: React.FC<CrudWrapperProps> = ({
 
   useEffect(() => {
     setCurrentPage(initialCurrentPage);
+    console.log(todosLosObjetos);
+    
   }, [initialCurrentPage]);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export const CrudWrapper: React.FC<CrudWrapperProps> = ({
   });
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <CrudFilters
         Filtros={Filtros}
         PageSize={pageSize}
@@ -112,7 +114,7 @@ export const CrudWrapper: React.FC<CrudWrapperProps> = ({
           onPageChange={handlePageChange}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

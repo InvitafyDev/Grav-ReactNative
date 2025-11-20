@@ -63,16 +63,22 @@ export const TableRow: React.FC<TableRowProps> = ({
           </View>
         )}
 
-        {tableHeaders.map((header, index) => (
-          <View key={index} style={styles.cellContainer}>
-            <CellRenderer
-              item={item}
-              header={header}
-              idField={idField}
-              onImageClick={onImageClick}
-            />
-          </View>
-        ))}
+        {tableHeaders.map((header, index) => {
+          const columnStyle = header.width
+            ? { width: header.width }
+            : { flex: header.flex ?? 1 };
+
+          return (
+            <View key={index} style={[styles.cellContainer, columnStyle]}>
+              <CellRenderer
+                item={item}
+                header={header}
+                idField={idField}
+                onImageClick={onImageClick}
+              />
+            </View>
+          );
+        })}
       </View>
 
       {isExpanded && hasSubRows && renderSubRows && (
@@ -106,7 +112,8 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '90deg' }],
   },
   cellContainer: {
-    flex: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
   },
   subRowsContainer: {
     backgroundColor: crudColors.light,

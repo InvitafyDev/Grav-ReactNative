@@ -1,5 +1,5 @@
 export interface ButtonConfig {
-  icon: string;
+  icon: React.ReactNode;
   color: string;
   action: (id: number, row?: any) => void;
   tooltip?: string;
@@ -30,6 +30,8 @@ export interface TableHeader {
   campo: string;
   colorCampo?: string;
   buttonsConfig?: ButtonConfig[] | null;
+  flex?: number;
+  width?: number; // Fixed width in pixels
 
   // Editable cells
   onUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void> | void;

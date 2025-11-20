@@ -40,7 +40,7 @@ export const EditableNumberCell: React.FC<EditableNumberCellProps> = ({ item, he
 const styles = StyleSheet.create({
   input: {
     ...crudTypography.cell,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
     paddingVertical: 6,
     borderRadius: borderRadius.sm,
     backgroundColor: 'transparent',

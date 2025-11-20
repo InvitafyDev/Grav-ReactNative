@@ -31,7 +31,11 @@ export const ButtonsCell: React.FC<ButtonsCellProps> = ({ item, header, idField 
           onPress={() => button.action(item[idField], item)}
           activeOpacity={0.7}
         >
-          <Text style={styles.icon}>{button.icon}</Text>
+          {typeof button.icon === 'string' ? (
+            <Text style={styles.icon}>{button.icon}</Text>
+          ) : (
+            button.icon
+          )}
         </TouchableOpacity>
       ))}
     </View>

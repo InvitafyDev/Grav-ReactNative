@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import Svg, { Path, Line } from 'react-native-svg';
 import type { FiltrosI } from './interfaces';
-import { InputFormText } from '../inputs/InputFormText';
-import { InputFormNumber } from '../inputs/InputFormNumber';
-import { InputFormBool } from '../inputs/InputFormBool';
-import { InputFormDate } from '../inputs/InputFormDate';
-import { InputFormDateAndHours } from '../inputs/InputFormDateAndHours';
-import { InputFormSelect } from '../inputs/InputFormSelect';
 import { crudColors, crudTypography, borderRadius, borderWidth, spacing } from '../theme/typography';
+import { InputFormBool, InputFormDate, InputFormDateAndHours, InputFormNumber, InputFormSelect, InputFormText } from '../inputs';
 
 interface CrudFiltersProps {
   Filtros: FiltrosI[];

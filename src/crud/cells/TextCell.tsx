@@ -21,7 +21,7 @@ export const TextCell: React.FC<TextCellProps> = ({ item, header }) => {
         {
           textAlign: header.align ?? 'left',
           backgroundColor,
-          color: backgroundColor !== 'transparent' ? crudColors.bg : crudColors.neutral,
+          color: crudColors.neutral,
         },
       ]}
       numberOfLines={2}
@@ -33,9 +33,7 @@ export const TextCell: React.FC<TextCellProps> = ({ item, header }) => {
 
 const styles = StyleSheet.create({
   text: {
-    ...crudTypography.cell,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingVertical: 12,
   },
   bold: {
     fontWeight: '700',

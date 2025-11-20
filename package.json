@@ -1,6 +1,6 @@
 {
   "name": "grav-reactnative",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "Mi librería de componentes React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

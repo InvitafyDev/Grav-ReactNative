@@ -24,6 +24,10 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
       {expandEnabled && <View style={styles.expandColumn} />}
 
       {tableHeaders.map((header, index) => {
+        const columnStyle = header.width
+          ? { width: header.width }
+          : { flex: header.flex ?? 1 };
+
         if (header.biSort) {
           return (
             <TouchableOpacity
@@ -31,7 +35,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
               style={[
                 styles.headerCell,
                 styles.sortable,
-                { flex: 1 },
+                columnStyle,
                 header.align === 'left' && styles.alignLeft,
                 header.align === 'right' && styles.alignRight,
                 header.align === 'center' && styles.alignCenter,
@@ -72,7 +76,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
             key={index}
             style={[
               styles.headerCell,
-              { flex: 1 },
+              columnStyle,
               header.align === 'left' && styles.alignLeft,
               header.align === 'right' && styles.alignRight,
               header.align === 'center' && styles.alignCenter,
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 44,
+    paddingVertical: 12,
   },
   sortable: {
     gap: 4,

@@ -33,7 +33,7 @@ export const EditableTextCell: React.FC<EditableTextCellProps> = ({ item, header
 const styles = StyleSheet.create({
   input: {
     ...crudTypography.cell,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
     paddingVertical: 6,
     borderRadius: borderRadius.sm,
     backgroundColor: 'transparent',
