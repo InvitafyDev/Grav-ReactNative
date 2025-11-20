@@ -271,33 +271,22 @@ export const CrudFilters: React.FC<CrudFiltersProps> = ({
 
       {showFilters && (
         <View style={styles.filtersContainer}>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={[...filters, { tipo: 'pageSize' as const }]}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => {
-              if ('tipo' in item && item.tipo === 'pageSize') {
-                return (
-                  <View style={styles.filterItem}>
-                    <InputFormText
-                      label="Mostrando:"
-                      value={pageSize}
-                      onChangeText={setPageSize}
-                      keyboardType="numeric"
-                      noMarginTop
-                    />
-                  </View>
-                );
-              }
-              return (
-                <View style={styles.filterItem}>
-                  {renderFilter(item as FiltrosI, index)}
-                </View>
-              );
-            }}
-            contentContainerStyle={styles.filtersGrid}
-          />
+          <View style={styles.filtersGrid}>
+            {filters.map((filter, index) => (
+              <View key={index} style={styles.filterItem}>
+                {renderFilter(filter, index)}
+              </View>
+            ))}
+            <View style={styles.filterItem}>
+              <InputFormText
+                label="Mostrando:"
+                value={pageSize}
+                onChangeText={setPageSize}
+                keyboardType="numeric"
+                noMarginTop
+              />
+            </View>
+          </View>
 
           <View style={styles.filterActions}>
             <TouchableOpacity
@@ -365,7 +354,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   filterItem: {
-    width: 200,
+    width: '100%',
   },
   filterActions: {
     flexDirection: 'row',
