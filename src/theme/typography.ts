@@ -58,31 +58,26 @@ export const crudTypography = {
     fontFamily: fontFamily.heading,
     fontSize: fontSize['2xl'],
     fontWeight: fontWeight.bold,
-    lineHeight: lineHeight.tight,
   },
   header: {
     fontFamily: fontFamily.base,
     fontSize: fontSize.sm,
     fontWeight: fontWeight.semibold,
-    lineHeight: lineHeight.normal,
   },
   cell: {
     fontFamily: fontFamily.base,
     fontSize: fontSize.sm,
     fontWeight: fontWeight.light,
-    lineHeight: lineHeight.normal,
   },
   button: {
     fontFamily: fontFamily.base,
     fontSize: fontSize.sm,
     fontWeight: fontWeight.medium,
-    lineHeight: lineHeight.normal,
   },
   filter: {
     fontFamily: fontFamily.base,
     fontSize: fontSize.sm,
     fontWeight: fontWeight.normal,
-    lineHeight: lineHeight.normal,
   },
 };
 
